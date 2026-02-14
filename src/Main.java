@@ -45,4 +45,12 @@ public class Main {
             }
         }
     }
+    public static void initDatabase() {
+        try (Connection conn = ConnectionOfData.getConnection(); Statement st = conn.createStatement()) {
+            st.execute("CREATE TABLE IF NOT EXISTS Actors (aid SERIAL PRIMARY KEY, firstname VARCHAR(50), lastname VARCHAR(50))");
+            st.execute("CREATE TABLE IF NOT EXISTS Movies (mid SERIAL PRIMARY KEY, title VARCHAR(100), release_year INT)");
+            st.execute("CREATE TABLE IF NOT EXISTS ActorMovie (aid INT REFERENCES Actors(aid), mid INT REFERENCES Movies(mid), PRIMARY KEY(aid, mid))");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
