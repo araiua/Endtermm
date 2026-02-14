@@ -54,3 +54,17 @@ public class Main {
             e.printStackTrace();
         }
     }
+    private static void addActor() throws SQLException {
+        System.out.print("First name: ");
+        String fn = sc.nextLine();
+        System.out.print("Last name: ");
+        String ln = sc.nextLine();
+
+        String sql = "INSERT INTO Actors (firstname, lastname) VALUES (?, ?)";
+        try (Connection conn = ConnectionOfData.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, fn);
+            ps.setString(2, ln);
+            ps.executeUpdate();
+            System.out.println("Actor added successfully!");
+        }
+    }
